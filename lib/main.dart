@@ -3,7 +3,7 @@ import 'package:rigsby/view/message_view.dart';
 import 'package:rigsby/view/mypage_view.dart';
 import 'package:rigsby/view/search_view.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
 }
 

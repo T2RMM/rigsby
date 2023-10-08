@@ -1,39 +1,41 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:rigsby/router/router.dart';
 import 'package:rigsby/view/message_view.dart';
 import 'package:rigsby/view/mypage_view.dart';
 import 'package:rigsby/view/search_view.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerDelegate: goRouter.routerDelegate,
+      routeInformationParser: goRouter.routeInformationParser,
       title: 'Rigsby',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Top Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class RouteView extends StatefulWidget {
+  const RouteView({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<RouteView> createState() => _RouteViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RouteViewState extends State<RouteView> {
   static const _screens = [
     SearchView(),
     MessageView(),
@@ -54,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .authStateChanges()
         .listen((User? currentUser) {
       if (currentUser == null) {
-        Navigator.pushReplacementNamed(context, "/login");
+        goRouter.go(context as String, extra: '/login');
       }
       else {
         FirebaseFirestore.instance

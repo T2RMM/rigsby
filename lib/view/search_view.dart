@@ -9,8 +9,8 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserState userState = Provider.of<UserState>(context);
-    final User user = userState.user!;
+    // final UserState userState = Provider.of<UserState>(context);
+    // final User user = userState.user!;
 
     return Scaffold(
       appBar: AppBar(

@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rigsby/router/router.dart';
 import 'package:rigsby/view/message_view.dart';
 import 'package:rigsby/view/mypage_view.dart';
 import 'package:rigsby/view/search_view.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const App());
 }
 
@@ -16,6 +20,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      routeInformationProvider: goRouter.routeInformationProvider,
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
       title: 'Rigsby',
@@ -51,12 +56,28 @@ class _RouteViewState extends State<RouteView> {
   }
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: _screens[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.search_rounded), label: 'さがす'),
+            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'メッセージ'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'アカウント'),
+          ],
+          type: BottomNavigationBarType.fixed,
+        ));
+  }
+
+  @override
   initState() {
     FirebaseAuth.instance
         .authStateChanges()
         .listen((User? currentUser) {
       if (currentUser == null) {
-        goRouter.go(context as String, extra: '/login');
+        context.go('/login');
       }
       else {
         FirebaseFirestore.instance
@@ -72,27 +93,5 @@ class _RouteViewState extends State<RouteView> {
       }
     });
     super.initState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: _screens[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.search_rounded), label: 'さがす'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'メッセージ'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'アカウント'),
-          ],
-          type: BottomNavigationBarType.fixed,
-        ));
-  }
-}
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

@@ -9,7 +9,7 @@ final goRouter = GoRouter(
     GoRoute(
         path: '/',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: RouteView(title: 'Route',));
+          return const MaterialPage(child: RouteView(title: 'Route'));
         }),
     GoRoute(
         path: '/login',

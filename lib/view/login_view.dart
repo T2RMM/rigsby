@@ -13,12 +13,11 @@ class LoginView extends StatefulWidget {
 class _LoginPageState extends State<LoginView> {
   String _email = '';
   String _password = '';
+  final UserState userState = UserState();
 
   @override
   Widget build(BuildContext context) {
     // ユーザー情報を受け取る
-    final UserState userState = Provider.of<UserState>(context);
-
     return Scaffold(
       body: Center(
         child: Container(

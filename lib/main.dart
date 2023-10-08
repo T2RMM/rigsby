@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rigsby/view/message_view.dart';
 import 'package:rigsby/view/mypage_view.dart';
@@ -47,6 +49,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  initState() {
+    FirebaseAuth.instance
+        .authStateChanges()
+        .listen((User? currentUser) {
+      if (currentUser == null) {
+        Navigator.pushReplacementNamed(context, "/login");
+      }
+      else {
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(currentUser.uid)
+            .get()
+            .then((DocumentSnapshot result) =>
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SearchView())))
+            .catchError((err) => print(err));
+      }
+    });
+    super.initState();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: _screens[_selectedIndex],
@@ -60,5 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           type: BottomNavigationBarType.fixed,
         ));
+  }
+}
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

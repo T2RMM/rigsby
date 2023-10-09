@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserState extends ChangeNotifier {
-  User? user;
+final currentUser = Provider<User>((ref) => throw UnimplementedError());
 
-  void setUser(User newUser) {
-    user = newUser;
-    notifyListeners();
+final userProvider = StreamProvider<User?>((ref) async* {
+  final auth = FirebaseAuth.instance;
+  final userStream = auth.authStateChanges();
+  await for (final user in userStream) {
+    yield user;
   }
-}
+});

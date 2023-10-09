@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rigsby/router/router.dart';
 import 'package:rigsby/view/message_view.dart';
@@ -11,14 +12,16 @@ import 'package:rigsby/view/search_view.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const App());
+  runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.watch(goRouterProvider);
+
     return MaterialApp.router(
       routeInformationProvider: goRouter.routeInformationProvider,
       routerDelegate: goRouter.routerDelegate,
@@ -32,15 +35,16 @@ class App extends StatelessWidget {
   }
 }
 
-class RouteView extends StatefulWidget {
-  const RouteView({super.key, required this.title});
+class RootView extends StatefulWidget {
+  const RootView({super.key, required this.title});
+  static const path = '/';
   final String title;
 
   @override
-  State<RouteView> createState() => _RouteViewState();
+  State<RootView> createState() => _RootViewState();
 }
 
-class _RouteViewState extends State<RouteView> {
+class _RootViewState extends State<RootView> {
   static const _screens = [
     SearchView(),
     MessageView(),

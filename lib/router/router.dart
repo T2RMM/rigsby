@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../main.dart';
 import '../provider/user_provider.dart';
+import '../view/home_view.dart';
 import '../view/login_view.dart';
 
-final goRouterProvider = Provider<GoRouter>((ref) {
+final routerProvider = Provider<GoRouter>((ref) {
   final userState = ref.watch(userProvider);
   return GoRouter(
     routes: <RouteBase>[
       GoRoute(
-        name: RootView.routeName,
-        path: RootView.routePath,
+        name: HomeView.routeName,
+        path: HomeView.routePath,
         builder: (BuildContext context, GoRouterState state) {
-          return const RootView(title: 'Root',);
+          return const HomeView(title: 'Home',);
         },
       ),
       GoRoute(
@@ -28,7 +28,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     redirect: (BuildContext context, GoRouterState state) {
       final isAuth = userState.valueOrNull != null;
       if (isAuth) {
-        return RootView.routePath;
+        return HomeView.routePath;
       } else {
         return LoginView.routePath;
       }

@@ -4,7 +4,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../main.dart';
+import 'home_view.dart';
 
 
 class LoginView extends ConsumerWidget {
@@ -20,7 +20,7 @@ class LoginView extends ConsumerWidget {
       actions: [
         AuthStateChangeAction<SignedIn>((context, state) {
           debugPrint("Signed in");
-          context.go(RootView.routePath);
+          context.go(HomeView.routePath);
         }),
       ],
     );

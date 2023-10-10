@@ -3,29 +3,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../main.dart';
+import '../provider/user_provider.dart';
 import '../view/login_view.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  final userState = ref.watch(userProvider);
   return GoRouter(
     routes: <RouteBase>[
-      // 最初に表示されるページ.
       GoRoute(
-        path: '/', // トップレベルのパスが必要なので指定する.
-        name: RootView.path, // 名前付きルートを指定する.
+        name: RootView.routeName,
+        path: RootView.routePath,
         builder: (BuildContext context, GoRouterState state) {
           return const RootView(title: 'Root',);
         },
-        // ネストしたルートを指定する.
-        routes: <RouteBase>[
-          GoRoute(
-            path: 'login',
-            name: LoginView.path,
-            builder: (BuildContext context, GoRouterState state) {
-              return const LoginView();
-            },
-          ),
-        ],
+      ),
+      GoRoute(
+        name: LoginView.routeName,
+        path: LoginView.routePath,
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginView();
+        },
       ),
     ],
+    redirect: (BuildContext context, GoRouterState state) {
+      final isAuth = userState.valueOrNull != null;
+      if (isAuth) {
+        return RootView.routePath;
+      } else {
+        return LoginView.routePath;
+      }
+    },
   );
 });

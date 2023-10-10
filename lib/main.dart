@@ -37,7 +37,8 @@ class App extends ConsumerWidget {
 
 class RootView extends StatefulWidget {
   const RootView({super.key, required this.title});
-  static const path = '/';
+  static String get routeName => 'root';
+  static String get routePath => '/';
   final String title;
 
   @override
@@ -73,29 +74,5 @@ class _RootViewState extends State<RootView> {
           ],
           type: BottomNavigationBarType.fixed,
         ));
-  }
-
-  @override
-  initState() {
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? currentUser) {
-      if (currentUser == null) {
-        context.go('/login');
-      }
-      else {
-        FirebaseFirestore.instance
-            .collection("users")
-            .doc(currentUser.uid)
-            .get()
-            .then((DocumentSnapshot result) =>
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SearchView())))
-            .catchError((err) => print(err));
-      }
-    });
-    super.initState();
   }
 }

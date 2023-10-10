@@ -9,7 +9,8 @@ import '../main.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
-  static const path = '/sign-in';
+  static String get routeName => 'login';
+  static String get routePath => '/$routeName';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,7 @@ class LoginView extends ConsumerWidget {
       actions: [
         AuthStateChangeAction<SignedIn>((context, state) {
           debugPrint("Signed in");
-          context.go(RootView.path);
+          context.go(RootView.routePath);
         }),
       ],
     );

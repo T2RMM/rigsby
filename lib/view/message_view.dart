@@ -9,8 +9,18 @@ class MessageView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Message'),
       ),
-      body: const Center(
-          child: Text('Message', style: TextStyle(fontSize: 32.0))),
+      body: SafeArea(
+        child: ListView(
+            children: const <Widget>[
+              ListTile(
+                leading: CircleAvatar(),
+                trailing: Text('3分前'),
+                title: Text('bird'),
+                subtitle: Text('こんにちは'),
+              ),
+            ]
+        ),
+      ),
     );
   }
 }

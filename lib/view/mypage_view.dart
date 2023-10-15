@@ -20,8 +20,8 @@ class MyPageView extends ConsumerWidget {
         width: double.infinity,
         child: Column(
               children: [
-                Text("$uid", style: TextStyle(fontSize: 32.0)),
-                SignOutButton(),
+                Text('$uid', style: const TextStyle(fontSize: 32.0)),
+                const SignOutButton(),
               ]
         )
       )

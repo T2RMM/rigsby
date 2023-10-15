@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MessageView extends StatelessWidget {
   const MessageView({Key? key}) : super(key: key);
@@ -10,16 +11,15 @@ class MessageView extends StatelessWidget {
         title: const Text('Message'),
       ),
       body: SafeArea(
-        child: ListView(
-            children: const <Widget>[
-              ListTile(
-                leading: CircleAvatar(),
-                trailing: Text('3分前'),
-                title: Text('bird'),
-                subtitle: Text('こんにちは'),
-              ),
-            ]
-        ),
+        child: ListView(children: <Widget>[
+          ListTile(
+            leading: const CircleAvatar(),
+            trailing: const Text('3分前'),
+            title: const Text('bird'),
+            subtitle: const Text('こんにちは'),
+            onTap: () => context.push('/chat/room3'),
+          )
+        ]),
       ),
     );
   }

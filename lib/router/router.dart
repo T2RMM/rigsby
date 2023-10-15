@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../provider/user_provider.dart';
+import '../view/chat_view.dart';
 import '../view/home_view.dart';
 import '../view/login_view.dart';
 
@@ -22,6 +23,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: LoginView.routePath,
         builder: (BuildContext context, GoRouterState state) {
           return const LoginView();
+        },
+      ),
+      GoRoute(
+        name: ChatView.routeName,
+        path: ChatView.routePath,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ChatView();
         },
       ),
     ],

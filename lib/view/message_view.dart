@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'chat_view.dart';
+
 class MessageView extends StatelessWidget {
   const MessageView({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class MessageView extends StatelessWidget {
             trailing: const Text('3分前'),
             title: const Text('bird'),
             subtitle: const Text('こんにちは'),
-            onTap: () => context.push('/chat/room3'),
+            onTap: () => context.pushNamed(ChatView.routeName),
           )
         ]),
       ),

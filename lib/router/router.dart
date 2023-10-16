@@ -14,6 +14,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         name: HomeView.routeName,
         path: HomeView.routePath,
+        redirect: (BuildContext context, GoRouterState state) {
+          final isAuth = userState.valueOrNull != null;
+          if (isAuth) {
+            return null;
+          } else {
+            return LoginView.routePath;
+          }
+        },
         builder: (BuildContext context, GoRouterState state) {
           return const HomeView(title: 'Home',);
         },
@@ -33,13 +41,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
     ],
-    redirect: (BuildContext context, GoRouterState state) {
-      final isAuth = userState.valueOrNull != null;
-      if (isAuth) {
-        return HomeView.routePath;
-      } else {
-        return LoginView.routePath;
-      }
-    },
+    // redirect: (BuildContext context, GoRouterState state) {
+    //   final isAuth = userState.valueOrNull != null;
+    //   if (isAuth) {
+    //     print("hoge");
+    //     return HomeView.routePath;
+    //   } else {
+    //     return LoginView.routePath;
+    //   }
+    // },
   );
 });

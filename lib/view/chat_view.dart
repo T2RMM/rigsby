@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ChatView extends StatelessWidget {
   const ChatView({Key? key}) : super(key: key);
   static String get routeName => 'chat';
-  static String get routePath => '/$routeName/:roomId';
+  static String get routePath => '/$routeName';
 
   @override
   Widget build(BuildContext context) {

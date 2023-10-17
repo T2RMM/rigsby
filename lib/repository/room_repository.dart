@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../model/message_model.dart';
 import '../model/room_model.dart';
 
 abstract class RoomRepository {
@@ -8,6 +9,7 @@ abstract class RoomRepository {
   Future<String> createRoom({required Room room});
   Future<void> updateRoom({required Room room});
   Future<void> deleteRoom({required String id});
+  Future<List<Message>> retrieveMessages({required String id,});
 }
 
 final firebaseFirestoreProvider = Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
@@ -59,6 +61,19 @@ class RoomRepositoryImpl implements RoomRepository {
           .collection('rooms')
           .doc(id)
           .delete();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<List<Message>> retrieveMessages({required String id,}) async {
+    try {
+      final snap = await _ref.read(firebaseFirestoreProvider)
+          .collection('rooms')
+          .doc(id)
+          .get();
+      return snap['messages'].map((doc) => Room.fromDocument(doc)).toList();
     } catch (e) {
       throw e.toString();
     }

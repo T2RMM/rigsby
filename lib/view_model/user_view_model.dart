@@ -5,7 +5,7 @@ import '../model/room_model.dart';
 import '../model/user_model.dart';
 import '../repository/user_repository.dart';
 
-final itemListProvider = StateNotifierProvider<UserListNotifier, AsyncValue<List<User>>>((ref) {
+final userListProvider = StateNotifierProvider<UserListNotifier, AsyncValue<List<User>>>((ref) {
   return UserListNotifier(ref);
 });
 
@@ -28,22 +28,20 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
   }
 
   Future<void> addUser({
-    required String uid,
+    required String userId,
     required String email,
     required String displayName,
-    required List<Room> rooms,
-    @DateTimeTimestampConverter() required DateTime createdAt,
   }) async {
     try {
       final user = User(
-        uid: uid,
+        uid: userId,
         email: email,
         displayName: displayName,
-        rooms: rooms,
+        rooms: [],
         createdAt: DateTime.now(),
       );
       state.whenData((users) => state = AsyncValue.data(
-          users..add(user.copyWith(uid: uid)),
+          users..add(user.copyWith(uid: userId)),
         ),
       );
     } catch (e) {

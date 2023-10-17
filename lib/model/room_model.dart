@@ -9,7 +9,7 @@ part 'room_model.g.dart';
 abstract class Room with _$Room {
   const Room._();
   factory Room({
-    required String id,
+    String? id,
     required List<Message> messages,
   }) = _Room;
 

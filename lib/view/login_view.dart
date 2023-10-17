@@ -26,3 +26,17 @@ class LoginView extends ConsumerWidget {
     );
   }
 }
+
+// onPressed: () {
+// isUpdating
+// ? itemListNotifier.updateItem(
+// // データの更新
+// updatedItem: item.copyWith(
+// title: textController.text.trim(),
+// ),
+// )
+//     : itemListNotifier.addItem(
+// // データの追加
+// title: textController.text.trim(),
+// );
+// Navigator.of(context).pop();

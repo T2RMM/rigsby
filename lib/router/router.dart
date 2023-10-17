@@ -41,14 +41,5 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
     ],
-    // redirect: (BuildContext context, GoRouterState state) {
-    //   final isAuth = userState.valueOrNull != null;
-    //   if (isAuth) {
-    //     print("hoge");
-    //     return HomeView.routePath;
-    //   } else {
-    //     return LoginView.routePath;
-    //   }
-    // },
   );
 });
